@@ -1,0 +1,9 @@
+docker for jupyterhub singleuser with pangeo
+
+Source for jupyterhub singleuser:
+url: https://github.com/UNINETTSigma2/helm-charts-dockerfiles
+dir: jupyterhub/singleuser-base-notebook
+
+Source for pangeo:
+url: https://github.com/pangeo-data/pangeo-docker-images
+dir: pangeo-notebook/environment.yml

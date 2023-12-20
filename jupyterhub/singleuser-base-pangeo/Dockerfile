@@ -71,7 +71,8 @@ RUN mkdir -p /home/notebook/.ipython/profile_default/security/ && chmod go+rwx -
 RUN chmod go+w -R "$HOME" && chmod o+w /home && rm -r /home/notebook
 
 # Add pangeo environment
-RUN conda env update -n base --file environment.yml
+COPY environment.yml $HOME/environment.yml
+RUN mamba env update -n base --file $HOME/environment.yml
 
 USER notebook
 WORKDIR $HOME
