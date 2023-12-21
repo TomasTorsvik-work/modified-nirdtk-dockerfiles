@@ -16,6 +16,13 @@ RUN mamba config --set channel_priority strict && \
     jupyter server extension enable jupyter_server_proxy --sys-prefix && \
     mamba clean --all -f -y
 
+# Add pangeo environment
+COPY environment.yml /home/notebook/environment.yml
+RUN mamba env update -n base --file /home/notebook/environment.yml && \
+    mamba install --yes -c conda-forge \
+    'git>=2' && \
+    mamba clean --all -f -y
+
 FROM jupyter/base-notebook:4c0c0aa1715f
 
 LABEL maintainer = "contact@sigma2.no"
@@ -58,7 +65,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/* && \
     ln -sf /usr/share/zoneinfo/Europe/Oslo /etc/localtime
 
-
 ENV TZ="Europe/Oslo"
 
 ENV HOME=/home/notebook \
@@ -69,10 +75,6 @@ RUN mkdir -p /home/notebook/.ipython/profile_default/security/ && chmod go+rwx -
     mkdir -p "$CONDA_DIR/.condatmp" && chmod go+rwx "$CONDA_DIR/.condatmp" && chown notebook:notebook "$CONDA_DIR"
 
 RUN chmod go+w -R "$HOME" && chmod o+w /home && rm -r /home/notebook
-
-# Add pangeo environment
-COPY environment.yml $HOME/environment.yml
-RUN mamba env update -n base --file $HOME/environment.yml
 
 USER notebook
 WORKDIR $HOME

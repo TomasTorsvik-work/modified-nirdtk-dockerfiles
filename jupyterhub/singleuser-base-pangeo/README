@@ -7,3 +7,5 @@ dir: jupyterhub/singleuser-base-notebook
 Source for pangeo:
 url: https://github.com/pangeo-data/pangeo-docker-images
 dir: pangeo-notebook/environment.yml
+
+NOTE: 'git>=2' is installed separately as required for jupyterlab-git
